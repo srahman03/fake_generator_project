@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+ENV/
+.env/
+*.sqlite3
+.DS_Store
+.idea/
+venv/
