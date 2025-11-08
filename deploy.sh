@@ -1,9 +1,13 @@
 #!/bin/bash
-#test8
-if ! python3 --version > /dev/null 2>&1;then
+
+command python3 --version > /dev/null 2>&1
+
+if [[ $? != 0 ]]; then
         echo "installing python"
         sudo apt install python3 -y
 fi
+
+
 if [[ -d ".venv" ]]; then
         echo "Not needed to create virtual env"
 else
@@ -19,7 +23,7 @@ else
 fi
 
 echo "activating virtual environment"
-sudo chmod 777 .venv/bin/activate
+sudo chmod 770 .venv/bin/activate
 source .venv/bin/activate
 
 echo "finished activating virtual environment"
@@ -37,5 +41,5 @@ sudo systemctl start project
 
 deactivate
 
-echo "starting nginx"
+echo "started nginx"
 sudo systemctl start nginx
