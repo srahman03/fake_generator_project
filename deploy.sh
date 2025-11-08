@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "Stopping processes"
+
+sudo systemctl stop nginx
+sudo systemctl stop project
+
 command python3 --version > /dev/null 2>&1
 
 if [[ $? != 0 ]]; then
