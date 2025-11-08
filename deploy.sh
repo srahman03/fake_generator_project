@@ -5,6 +5,7 @@ echo "Stopping processes"
 sudo systemctl stop nginx
 sudo systemctl stop project
 
+echo "Checking python is installed"
 command python3 --version > /dev/null 2>&1
 
 if [[ $? != 0 ]]; then
@@ -12,13 +13,15 @@ if [[ $? != 0 ]]; then
         sudo apt install python3 -y
 fi
 
-
+echo "Checking python virtual environment is installed"
 if [[ -d ".venv" ]]; then
         echo "Not needed to create virtual env"
 else
          sudo apt install python3-venv -y
          python3 -m venv .venv
 fi
+
+echo "Checking nginx is installed"
 command -v nginx > /dev/null 2>&1
 
 if [[ $? == 1 ]]; then
