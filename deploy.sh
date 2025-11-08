@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#test
 if ! python3 --version > /dev/null 2>&1;then
         echo "installing python"
         sudo apt install python3 -y
