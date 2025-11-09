@@ -51,4 +51,4 @@ deactivate
 
 echo "started nginx"
 sudo systemctl start nginx
-#testing 5
+#testing 6
