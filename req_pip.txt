@@ -2,3 +2,4 @@ flask
 faker
 gunicorn
 requests
+pylint
