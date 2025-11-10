@@ -1,5 +1,5 @@
 #!/bin/bash
-#why doesnt it work now 
+#why doesnt it work now 1
 echo "Stopping processes"
 
 sudo systemctl stop nginx
