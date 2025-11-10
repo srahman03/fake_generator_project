@@ -1,5 +1,5 @@
 #!/bin/bash
-#checkign again
+#checkign again 1
 echo "Stopping processes"
 
 sudo systemctl stop nginx
