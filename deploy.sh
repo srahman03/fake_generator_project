@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#why doesnt it work now 
 echo "Stopping processes"
 
 sudo systemctl stop nginx
@@ -51,4 +51,4 @@ deactivate
 
 echo "started nginx"
 sudo systemctl start nginx
-#testing12
+
