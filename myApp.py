@@ -1,145 +1,91 @@
-
 from faker import Faker
-
 import random
 fake = Faker()
 
-def validate_input(prompt):
-    while True:
-        try:
-            response = int(input(prompt))
-            if response <= 0:
-                print("Please enter a positive number")
-                continue
-            break
-        except ValueError:
-            print("Please enter a number")
-    return response
-
 my_dict = {
-    "int": "fake.random_int(min=1, max=9999)",
-    "name":"fake.name()" ,
-    "first_name":"fake.first_name()",
-    "last_name":"fake.last_name()" ,
-    "username":"fake.user_name()",
-    "address":"fake.address().replace(\"\\n\",\",\")",
-    "email":"fake.email()",
-    "number":"fake.phone_number()" ,
-    "city":"fake.city()" ,
-    "country":"fake.country()" ,
-    "text":"fake.text().replace(\"\\n\", \" \")" ,
-    "log":"fake.text().replace(\"\\n\", \" \")" ,
-    "link":"fake.url()" ,
-    "date":"str(fake.date())" ,
-    "time":"str(fake.time())" ,
-    "word":"fake.word()" ,
-    "hostname":"fake.hostname()" ,
-    "image":"fake.image_url()" ,
-    "domain":"fake.domain_name()" ,
-    "mac":"fake.mac_address()" ,
-    "port":"fake.port_number()" ,
-    "char":"fake.country_code()" ,
-    "currency":"fake.currency()" ,
-    "ip":"fake.ipv4()" ,
-    "level": ("ADMIN", "INFO", "WARN", "ERROR","DEBUG","EXTREME","WARNING")
-    }
+    "city":lambda: fake.city() ,
+    "country":lambda: fake.country() ,
+    "text":lambda **kwargs: fake.text(**kwargs).replace("\n"," "),
+    "latitude":lambda: str(fake.latitude()),
+    "longitude":lambda: str(fake.longitude()),
+    "podium": lambda : fake.random_int(min=0,max=200),
+    "distance": lambda **kwargs: fake.pyfloat(min_value=kwargs.get("min",3), max_value=kwargs.get("max",6), right_digits=2),
+    "int": lambda **kwargs: fake.random_int(**kwargs),
+    "email":lambda: fake.email(),
+    "hostname": lambda: fake.hostname(),
+    "image": lambda:fake.image_url(),
+    "domain": lambda: fake.domain_name(),
+    "mac": lambda: fake.mac_address(),
+    "port": lambda: fake.port_number(),
+    "currency": lambda:fake.currency(),
+    "ip": lambda:fake.ipv4(),
+    "number":lambda:fake.phone_number(),
+    "driver":lambda **kwargs: extra(**kwargs),
+    "team":lambda **kwargs: extra(**kwargs),
+    "circuit":lambda **kwargs: extra(**kwargs),
+    "weather":lambda **kwargs: extra(**kwargs),
+    "tyres":lambda **kwargs: extra(**kwargs),
+    "name":lambda: fake.name(),
+    "first_name":lambda: fake.first_name(),
+    "last_name":lambda: fake.last_name(),
+    "username":lambda:fake.user_name(),
+    "date":lambda :str(fake.date()),
+    "dob": lambda: str(fake.date_of_birth())
+}
 
+full_list = [
+    {"driver":[
+         {'first_name': 'Lando', 'last_name': 'Norris', 'name': 'Lando Norris'},
+         {'first_name': 'George', 'last_name': 'Russell', 'name': 'George Russell'},
+         {'first_name': 'Max', 'last_name': 'Verstappen', 'name': 'Max Verstappen'},
+         {'first_name': 'Esteban', 'last_name': 'Ocon', 'name': 'Esteban Ocon'},
+         {'first_name': 'Kimi', 'last_name': 'Antonelli', 'name': 'Kimi Antonelli'},
+         {'first_name': 'Alexander', 'last_name': 'Albon', 'name': 'Alexander Albon'},
+         {'first_name': 'Oliver', 'last_name': 'Bearman', 'name': 'Oliver Bearman'},
+         {'first_name': 'Lance', 'last_name': 'Stroll', 'name': 'Lance Stroll'},
+         {'first_name': 'Carlos', 'last_name': 'Sainz', 'name': 'Carlos Sainz'},
+         {'first_name': 'Isack', 'last_name': 'Hadjar', 'name': 'Isack Hadjar'},
+         {'first_name': 'Liam', 'last_name': 'Lawson', 'name': 'Liam Lawson'},
+         {'first_name': 'Jack', 'last_name': 'Doohan', 'name': 'Jack Doohan'},
+         {'first_name': 'Gabriel', 'last_name': 'Bortoleto', 'name': 'Gabriel Bortoleto'},
+         {'first_name': 'Nico', 'last_name': 'Hulkenberg', 'name': 'Nico Hulkenberg'},
+         {'first_name': 'Yuki', 'last_name': 'Tsunoda', 'name': 'Yuki Tsunoda'},
+         {'first_name': 'Fernando', 'last_name': 'Alonso', 'name': 'Fernando Alonso'},
+         {'first_name': 'Charles', 'last_name': 'Leclerc', 'name': 'Charles Leclerc'},
+         {'first_name': 'Lewis', 'last_name': 'Hamilton', 'name': 'Lewis Hamilton'},
+         {'first_name': 'Pierre', 'last_name': 'Gasly', 'name': 'Pierre Gasly'}
+             ]
+     },
+    {"team":["McLaren", "Mercedes", "Red Bull Racing", "Haas F1 Team", "Mercedes", "Williams", "Haas F1 Team", "Aston Martin", "Williams", "Racing Bulls", "Red Bull Racing", "Alpine", "Kick Sauber", "Kick Sauber", "Racing Bulls", "Aston Martin", "Ferrari", "Ferrari", "Alpine" ]},
+    {"circuit":["Albert Park Grand Prix Circuit", "Sepang International Circuit", "Bahrain International Circuit", "Circuit de Barcelona-Catalunya", "Istanbul Park", "Circuit de Monaco", "Circuit Gilles Villeneuve", "Circuit de Nevers Magny-Cours", "Silverstone Circuit", "Hockenheimring", "Hungaroring", "Valencia Street Circuit", "Circuit de Spa-Francorchamps", "Autodromo Nazionale di Monza", "Marina Bay Street Circuit", "Fuji Speedway", "Shanghai International Circuit", "Indianapolis Motor Speedway", "Autodromo Enzo e Dino Ferrari", "Suzuka Circuit", "Las Vegas Strip Street Circuit", "Yas Marina Circuit", "Circuito de Jerez", "Okayama International Circuit", "Adelaide Street Circuit", "Kyalami", "Donington Park", "Phoenix Street Circuit", "Circuit Paul Ricard", "Korean International Circuit", "Detroit Street Circuit", "Brands Hatch", "Circuit Park Zandvoort", "Zolder", "Dijon-Prenois", "Fair Park", "Long Beach", "Las Vegas Street Circuit", "Jarama", "Watkins Glen", "Scandinavian Raceway", "Mosport International Raceway", "Nivelles-Baulers", "Charade Circuit", "Circuit Mont-Tremblant", "Rouen-Les-Essarts", "Le Mans", "Reims-Gueux", "Prince George Circuit", "Zeltweg", "Aintree", "Circuito da Boavista", "Riverside International Raceway", "AVUS", "Monsanto Park Circuit", "Sebring International Raceway", "Ain Diab", "Pescara Circuit", "Circuit Bremgarten", "Circuit de Pedralbes", "Buddh International Circuit", "Circuit of the Americas", "Red Bull Ring", "Sochi Autodrom", "Baku City Circuit", "Autodromo Internazionale del Mugello", "Jeddah Corniche Circuit", "Losail International Circuit", "Miami International Autodrome"]},
+    {"weather":["Dry", "Wet", "Sunny", "Light Rain", "Cloudy", "Foggy"]},
+    {"tyres":["Soft", "Medium", "Hard", "Intermediate", "Full Wet"]}
+]
 
-
-def generate_fake_data(my_list,number):
-    """prompt = "Please enter the number of requests you would like to make:"
-    req_num = validate_input(prompt)"""
+def generate_fake_data(schema, num_of_dicts):
     storage =[]
-    if my_list.get("count"):
-        del my_list["count"]
-
-    for l in range(number):
-        temp =my_list.copy()
-        print (f"temp: {temp}")
-        for i,v in temp.items():
-            searching_words(my_dict, v.lower(), temp, i)
-        linking_name(temp,list(temp.values()),list(my_list.keys()),list(my_list.values()))
-        storage.append(temp)
+    schema.pop("count", None)#remove count key as not needed
+    for l in range(num_of_dicts):#num of data dicts to create
+        temp_schema = schema.copy()# copied schema
+        for key,values in temp_schema.items():
+            if isinstance(values, dict):# if values are dict
+                my_type = values.get("type")#get the type
+                new_dict = {k:v for k,v in values.items() if k != "type"}#stores arguments in dict
+                if my_type in (list(item.keys())[0] for item in full_list):#compares to full list keys
+                    temp_schema[key] = my_dict[my_type](values=my_type)
+                elif new_dict:
+                    temp_schema[key] = my_dict[my_type](**new_dict)
+                else:
+                    temp_schema[key] = my_dict[my_type]()
+            else:
+                if values in (list(item.keys())[0] for item in full_list):
+                    temp_schema[key] = my_dict[values](values=values)
+                else:
+                    temp_schema[key] = my_dict[values]()
+        #new_temp = linking_words(schema, schema.values(),schema.keys(), temp_schema)
+        storage.append(temp_schema)
     return storage
 
-
-def searching_words(my_dict,key,my_list,i):
-    for l,v in my_dict.items():
-        if l == key:
-            if key == "level":
-                my_list[i] = random.choice(my_dict["level"])
-                return my_list
-            my_list[i] = eval(v)
-            return my_list
-    my_list[i] = fake.word()
-    return my_list
-
-
-def linking_name(temp,new_dict_values, old_dict_keys,old_dict_values):
-    #print(temp)
-    #print(f"Edited values:{new_dict_values}")
-    #print(f"keys:{old_dict_keys}")
-    #print(f"Old values:{old_dict_values}")
-
-    if not "name" in old_dict_values:
-        return temp
-
-    my_list = list(create_name_list(new_dict_values, old_dict_values))
-    new_dict = {
-        "username": my_list[0],
-        "email": my_list[1],
-    }
-    second_dict={
-        "first_name":my_list[2],
-        "last_name":my_list[3]
-    }
-    if "username" in old_dict_values and "email" in old_dict_values and "name" in old_dict_values:
-        for i,v in new_dict.items():
-            index = old_dict_values.index(i)
-            temp[old_dict_keys[index]] = "".join(str(new_dict[i]))
-
-    elif "username" in old_dict_values and "name" in old_dict_values and not "email" in old_dict_values:
-        index = old_dict_values.index("username")
-        temp[old_dict_keys[index]] = "".join(str(new_dict["username"]))
-
-    elif "email" in old_dict_values and "name" in old_dict_values and not "username" in old_dict_values:
-        index = old_dict_values.index("email")
-        temp[old_dict_keys[index]] = "".join(str(new_dict["email"]))
-
-    if "first_name" in old_dict_values and "last_name" in old_dict_values:
-        for i,v in second_dict.items():
-            index = old_dict_values.index(i)
-            temp[old_dict_keys[index]] = "".join(str(second_dict[i]))
-
-    elif "first_name" in old_dict_values and not "last_name" in old_dict_values:
-        index = old_dict_values.index("first_name")
-        temp[old_dict_keys[index]] = "".join(str(second_dict["first_name"]))
-
-    elif not "first_name" in old_dict_values and "last_name" in old_dict_values:
-        index = old_dict_values.index("last_name")
-        temp[old_dict_keys[index]] = "".join(str(second_dict["last_name"]))
-
-    return temp
-
-
-def create_name_list(new_dict_values,old_dict_values):
-    current_name = new_dict_values[old_dict_values.index("name")].rstrip()
-    last_name = current_name.split()[-1]
-    first_name = current_name.split()[0]
-    new_username = (
-            first_name[:1] +
-            first_name[1:random.randint(2, len(first_name))] +
-            last_name[:random.randint(0, len(last_name))] +
-            random.choice("@-_") +
-            str(random.randint(0, 9999))
-    )
-    new_email = (
-            first_name[:random.randint(3, len(first_name))] +
-            random.choice([".", "_", ""]) +
-            last_name[:random.randint(3, len(last_name))] +
-            str(random.randint(0, 9999)) +
-            "@" +
-            random.choice(["gmail.com", "hotmail.co.uk", "outlook.com"])
-    )
-
-    return new_username, new_email,first_name,last_name
+def extra(values):
+    x = next(random.choice(f[values]) for f in full_list if values in list(f.keys()))
+    return x
