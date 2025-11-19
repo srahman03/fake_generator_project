@@ -1,5 +1,5 @@
 from flask import Flask, request,jsonify, Response
-from myApp import generate_fake_data
+from myf1API import generate_fake_data
 import json
 app = Flask(__name__)
 
@@ -16,12 +16,12 @@ def get_count():
 @app.post("/api/schema")
 def add_schema():
     data = request.get_json()
-    number = data.get("count", 1)
-    result = generate_fake_data(data, int(number))
+    count =  request.args.get('count',default=1)
+    result = generate_fake_data(data, int(count))
     accept = request.headers.get("Accept")
 
     if "application/x-ndjson" in accept:
-        index_name = "f1_index"
+        index_name = "my_latest_index"
         lines=[]
         for item in result:
             lines.append(json.dumps({"index": {"_index": index_name}}))
@@ -35,10 +35,9 @@ def add_schema():
             mimetype="application/x-ndjson"
         )
     with open('file.txt', "w") as f:
-        f.write(result)
+        f.write(str(result))
 
     return jsonify(result)
 
-#Testing jenkins pipeline with dockerfile
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
