@@ -165,9 +165,9 @@ def create_email(my_name_dict,name):
     if "email" in my_name_dict and name is not None:
         if isinstance(name,tuple):
             new_email = (
-                    name[0][:random.randint(3, len(name[0]))] +
+                    name[0][:random.randint(2, len(name[0]))] +
                     random.choice([".", "_", ""]) +
-                    name[1][:random.randint(3, len(name[1]))] +
+                    name[1][:random.randint(2, len(name[1]))] +
                     str(random.randint(0, 9999)) +
                     "@" +
                     random.choice(["gmail.com", "hotmail.co.uk", "outlook.com"])
@@ -175,7 +175,7 @@ def create_email(my_name_dict,name):
             return new_email
         else:
             new_email = (
-                    name[0][:random.randint(3, len(name[0]))] +
+                    name[0][:random.randint(2, len(name[0]))] +
                     random.choice([".", "_", ""]) +
                     str(random.randint(0, 9999)) +
                     "@" +
