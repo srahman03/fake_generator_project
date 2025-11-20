@@ -25,9 +25,12 @@ A Python-based project that generates test data from a given JSON schema. The pr
 
 
 ## Installation & Setup
+
 1. Install Docker:
 
-- Install Docker
+```bash
+Install Docker
+```
 
 2. Clone the repository:
 
@@ -38,4 +41,6 @@ cd <your-project-directory>
 
 3. Running the app
 
-- docker compose up 
+```bash
+docker compose up 
+```
