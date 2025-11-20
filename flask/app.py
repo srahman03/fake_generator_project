@@ -1,5 +1,5 @@
 from flask import Flask, request,jsonify, Response
-from myApp import generate_fake_data
+from flask.myApp import generate_fake_data
 import json
 app = Flask(__name__)
 
