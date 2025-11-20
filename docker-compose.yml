@@ -1,0 +1,23 @@
+services:
+  app:
+    image: flask_image
+    build: ./flask
+    container_name: my_flask_container
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx_image
+    build: ./nginx
+    container_name: nginx_container
+    ports:
+      - "80:80"
+    networks:
+      - my_network
+    depends_on:
+      - app
+
+networks:
+  my_network:
+    driver: bridge
+
