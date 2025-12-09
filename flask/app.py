@@ -19,24 +19,25 @@ def add_schema():
     count =  request.args.get('count',default=1)
     result = generate_fake_data(data, int(count))
     accept = request.headers.get("Accept")
+    index_name = "my_latest_index"
+    lines=[]
+    lines_for_ndjson = []
+    for i in result:
+        lines.append(json.dumps({"index": {"_index": index_name}}))
+        lines.append(json.dumps(i))
+        lines_for_ndjson.append(json.dumps(i))
+    bulk_api_str = "\n".join(lines) + "\n"
+
+    with open('file.txt', "w") as f:
+        f.write(bulk_api_str)
 
     if "application/x-ndjson" in accept:
-        index_name = "my_latest_index"
-        lines=[]
-        for item in result:
-            lines.append(json.dumps({"index": {"_index": index_name}}))
-            lines.append(json.dumps(item))
-        ndjson_str = "\n".join(lines) + "\n"
+        ndjson_str = "\n".join(lines_for_ndjson) + "\n"
 
-        with open('file.txt', "w") as f:
-            f.write(ndjson_str)
         return Response(
             ndjson_str,
             mimetype="application/x-ndjson"
         )
-    with open('file.txt', "w") as f:
-        f.write(str(result))
-
     return jsonify(result)
 
 if __name__ == "__main__":
