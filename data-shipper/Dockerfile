@@ -7,6 +7,6 @@ WORKDIR /app
 COPY . /app
 
 RUN pip3 install --upgrade pip
-RUN pip3 install elasticsearch
+RUN pip3 install requests
 
 CMD ["python", "./shipper-app.py"]
