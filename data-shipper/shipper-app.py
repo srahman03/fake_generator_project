@@ -1,6 +1,10 @@
 import requests
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 url = "https://elastic-latest.netbuilder-training.com/_bulk"
+
 headers = {"Content-Type": "application/x-ndjson"}
 
 with open("/data/file.txt", "rb") as f:
@@ -10,7 +14,7 @@ response = requests.post(
     url,
     headers=headers,
     data=data,
-    auth=("elastic", "bCDNi5NtUSBuTmYgE0vvS6uZ")
+    auth=("elastic", os.getenv("PASS"))
 )
 
 print(response.text)

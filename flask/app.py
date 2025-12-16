@@ -1,6 +1,7 @@
 from flask import Flask, request,jsonify, Response
 from myApp import generate_fake_data
 import json
+import hashlib
 app = Flask(__name__)
 
 @app.get("/api/schema")
@@ -19,11 +20,12 @@ def add_schema():
     count =  request.args.get('count',default=1)
     result = generate_fake_data(data, int(count))
     accept = request.headers.get("Accept")
-    index_name = "my_latest_index"
+    index_name = "f1_index_2"
     lines=[]
     lines_for_ndjson = []
     for i in result:
-        lines.append(json.dumps({"index": {"_index": index_name}}))
+	doc_id = hashlib.sha256(json.dumps(i, sort_keys=True).encode()).hexdigest()
+        lines.append(json.dumps({"index": {"_index": index_name, "_id": doc_id}}))
         lines.append(json.dumps(i))
         lines_for_ndjson.append(json.dumps(i))
     bulk_api_str = "\n".join(lines) + "\n"
