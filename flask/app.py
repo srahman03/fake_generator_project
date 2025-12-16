@@ -24,7 +24,7 @@ def add_schema():
     lines=[]
     lines_for_ndjson = []
     for i in result:
-	doc_id = hashlib.sha256(json.dumps(i, sort_keys=True).encode()).hexdigest()
+        doc_id = hashlib.sha256(json.dumps(i, sort_keys=True).encode()).hexdigest()
         lines.append(json.dumps({"index": {"_index": index_name, "_id": doc_id}}))
         lines.append(json.dumps(i))
         lines_for_ndjson.append(json.dumps(i))
