@@ -21,12 +21,11 @@ def add_schema():
     result = generate_fake_data(data, int(count))
     accept = request.headers.get("Accept")
 
-    lines_for_ndjson = []
-    for i in result:
-        lines_for_ndjson.append(json.dumps(i))
     if "application/x-ndjson" in accept:
+        lines_for_ndjson = []
+        for i in result:
+            lines_for_ndjson.append(json.dumps(i))
         ndjson_str = "\n".join(lines_for_ndjson) + "\n"
-
         return Response(
             ndjson_str,
             mimetype="application/x-ndjson"

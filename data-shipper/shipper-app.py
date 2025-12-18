@@ -3,7 +3,6 @@ from elasticsearch.helpers import streaming_bulk
 import requests
 import os
 from dotenv import load_dotenv
-import json
 
 schema_data = {
     "wins": {"type":"int","min":0,"max":100},
@@ -73,15 +72,12 @@ def generate_actions(flask_url,params,headers):
         )
 
         if headers["Accept"] == "application/x-ndjson":
-            lines = []
             for c in response.iter_lines():
-                lines.append(json.dumps(str(c)))
                 yield {
                     "_index": "my_f1_index",
                     "_source": c,
                     "pipeline": "my_pipeline"
                 }
-
         else:
             for doc in response.json():
                 yield {
