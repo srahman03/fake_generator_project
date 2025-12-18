@@ -52,7 +52,11 @@ def create_index(client):
         "settings": {"number_of_shards": 1},
         "mappings": {
             "properties": {
-                "location": {"type": "geo_point"}
+                "geoip": {
+                    "properties": {
+                        "location": {"type": "geo_point"}
+                    }
+                }
             }
         },
     }
