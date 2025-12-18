@@ -6,6 +6,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN pip3 install --upgrade pip && pip3 install requests &&  pip3 install python-dotenv
+RUN pip3 install --upgrade pip && pip3 install elasticsearch requests python-dotenv
 
 CMD ["python", "./shipper-app.py"]
